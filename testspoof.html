@@ -2,47 +2,93 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Upload & Preview PDF</title>
+<title>Upload PDF</title>
+
 <style>
-    body{
-        font-family: Arial, sans-serif;
-        text-align: center;
-        padding: 20px;
-        background:#f5f5f5;
-    }
-    #viewer{
-        margin-top:20px;
-        width:80%;
-        height:600px;
-        border:1px solid #ccc;
-        background:white;
-    }
+body{
+    font-family: Arial, sans-serif;
+    text-align:center;
+    padding:40px;
+    background:#f5f5f5;
+}
+
+button{
+    padding:10px 20px;
+    margin:10px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+#actions{
+    display:none;
+    margin-top:20px;
+}
 </style>
+
 </head>
 <body>
 
-<h2>Upload & Preview PDF</h2>
+<h2>Upload File PDF</h2>
 
 <input type="file" id="pdfFile" accept="application/pdf">
 
-<br><br>
-
-<iframe id="viewer"></iframe>
+<div id="actions">
+    <br>
+    <button onclick="previewPDF()">Preview</button>
+    <button onclick="downloadPDF()">Download</button>
+</div>
 
 <script>
-const input = document.getElementById("pdfFile");
-const viewer = document.getElementById("viewer");
 
-input.addEventListener("change", function(){
+let fileURL = "";
+let fileName = "";
+
+document.getElementById("pdfFile").addEventListener("change", function(){
+
     const file = this.files[0];
 
     if(file && file.type === "application/pdf"){
-        const fileURL = URL.createObjectURL(file);
-        viewer.src = fileURL;
+
+        fileURL = URL.createObjectURL(file);
+        fileName = file.name;
+
+        document.getElementById("actions").style.display = "block";
+
     }else{
-        alert("Silakan upload file PDF.");
+        alert("Silakan upload file PDF");
     }
+
 });
+
+function previewPDF(){
+
+    const newTab = window.open("https://www.google.com", "_blank");
+
+    setTimeout(()=>{
+
+        newTab.document.body.innerHTML = `
+        <iframe src="${fileURL}" style="width:100%;height:100vh;border:none;"></iframe>
+        `;
+
+    },500);
+
+}
+
+function downloadPDF(){
+
+    const newTab = window.open("https://www.google.com", "_blank");
+
+    setTimeout(()=>{
+
+        const a = newTab.document.createElement("a");
+        a.href = fileURL;
+        a.download = fileName;
+        a.click();
+
+    },500);
+
+}
+
 </script>
 
 </body>
