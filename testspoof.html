@@ -2,59 +2,39 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Browser UI Test</title>
+<title>Address Bar Hide Test</title>
 
 <style>
 body{
-  font-family: Arial, sans-serif;
   margin:0;
-  background:#f2f2f2;
+  font-family:Arial;
 }
 
-/* halaman awal */
+/* header UI palsu untuk test */
 
-#start{
-  display:flex;
-  height:100vh;
-  justify-content:center;
-  align-items:center;
+.fakebar{
+  position:sticky;
+  top:0;
+  background:#202124;
+  color:white;
+  padding:12px;
+  text-align:center;
+  font-size:14px;
 }
 
-#start button{
-  padding:20px 40px;
-  font-size:22px;
-  cursor:pointer;
-}
+/* konten tinggi supaya bisa scroll */
 
-/* halaman login */
-
-#loginPage{
-  display:none;
-  height:100vh;
-  justify-content:center;
-  align-items:center;
+.content{
+  height:4000px;
+  background:linear-gradient(white,#e0e0e0);
+  padding:20px;
 }
 
 .box{
   background:white;
-  width:320px;
   padding:30px;
+  margin-top:40px;
   box-shadow:0 0 10px rgba(0,0,0,0.2);
-}
-
-.box h2{
-  text-align:center;
-}
-
-input{
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-}
-
-button.login{
-  width:100%;
-  padding:12px;
 }
 </style>
 
@@ -62,49 +42,40 @@ button.login{
 
 <body>
 
-<div id="start">
-<button onclick="openPage()">Click</button>
+<div class="fakebar">
+Demo Header UI (Testing address bar hide)
 </div>
 
-<div id="loginPage">
+<div class="content">
+
 <div class="box">
-<h2>Account Login</h2>
-
-<input type="text" placeholder="Email">
-<input type="password" placeholder="Password">
-
-<button class="login">Login</button>
-
-<p style="font-size:12px;color:gray">
-Demo login page for browser UI testing
+<h2>Scroll Down</h2>
+<p>
+Scroll halaman ini di browser Android untuk melihat apakah address bar
+browser menghilang ketika halaman bergerak ke bawah.
 </p>
-
 </div>
+
 </div>
 
 <script>
 
-function openPage(){
+/*
+auto scroll untuk memicu address bar hide
+*/
 
-  document.getElementById("start").style.display="none";
-  document.getElementById("loginPage").style.display="flex";
+window.onload = function(){
 
-  setTimeout(triggerFind,500);
-}
+  setTimeout(function(){
 
-function triggerFind(){
+    window.scrollTo({
+      top:500,
+      behavior:"smooth"
+    });
 
-  /*
-  mencoba memicu fitur find
-  */
+  },800);
 
-  try{
-    window.find("Login");
-  }catch(e){
-    console.log(e);
-  }
-
-}
+};
 
 </script>
 
