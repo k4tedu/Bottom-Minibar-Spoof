@@ -1,114 +1,26 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fake Mini URL Bar Above Keyboard</title>
-<style>
-  button { padding: 12px 18px; font-size: 16px; margin-right: 10px; }
-  textarea { width: 100%; height: 80px; font-size: 18px; margin-top: 20px; }
+<html>
 
-  .fake-bar {
-    text-align: center;
-    background: #fff7f0;
-    border-top: 1px solid #e0cbb0;
-    border-bottom: 1px solid #e0cbb0;
-    color: #222;
-    font-size: 16px;
-    padding: 5px 0;
-    position: fixed;
-    width: 100%;
-    z-index: 9999;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, bottom 0.2s ease;
-  }
+<h1>Spoof short domain (.cr,.cw,.ci,.run,.io,info=>inf in address bar,etc ) </h1>
+<h2>visible in the address bar .c only so the victim will think it is .com, .io => visible in address bar .i the victimX will think it is .it (italy)</h2>
+<div>
+<a href="https://www.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.auths.account.google.cr">Open google (.cr)</a><br/><br/>
+<a href="https://www.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.auths.account.google.cw">Open google (.cw)</a><br/><br/>
+<a href="https://www.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.auths.account.google.ci">Open google (.ci)</a><br/><br/>
+<a href="https://www.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.auths.account.google.run">Open google (.run) like google.ru (russia)</a><br/><br/>
+<a href="https://www.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.auths.account.facebook.cr">Open facebook (.cr)</a><br/><br/>
+<a href="https://www.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.auths.account.facebook.cw">Open facebook (.cw)</a><br/><br/>
+<a href="https://www.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.auths.account.facebook.ci">Open facebook (.ci) </a><br/><br/>
+<a href="https://www.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.auths.account.facebook.io">Open facebook (.io) like (.it)</a><br/><br/>
 
-  .fake-bar.show {
-    opacity: 1;
-    visibility: visible;
-  }
 
-</style>
-</head>
-<body>
 
-<button id="showBtn">Show Keyboard</button>
-<textarea id="ta" placeholder="Textarea for forced focus…"></textarea>
+</div>
 
-<div class="fake-bar" id="fakeBar">google.com</div>
 
-<script>
-const fakeBar = document.getElementById('fakeBar');
-const ta = document.getElementById('ta');
 
-// Adjust fake bar position above keyboard
-function adjustFakeBar() {
-  const vv = window.visualViewport;
-  let keyboardHeight = 0;
 
-  if (vv) {
-    // Calculate height of virtual keyboard
-    keyboardHeight = window.innerHeight - vv.height - vv.offsetTop;
-  }
 
-  fakeBar.style.bottom = keyboardHeight + 'px';
-}
 
-// Show the fake bar
-function showFakeBar() {
-  fakeBar.classList.add('show');
-  adjustFakeBar();
-}
 
-// Hide the fake bar
-function hideFakeBar() {
-  fakeBar.classList.remove('show');
-}
-
-// Listen for viewport changes (keyboard show/hide)
-if ('visualViewport' in window) {
-  window.visualViewport.addEventListener('resize', () => {
-    if (document.activeElement === ta) adjustFakeBar();
-  });
-}
-
-// Handle orientation changes
-window.addEventListener('orientationchange', adjustFakeBar);
-
-// Button click: show keyboard + fake bar
-document.getElementById("showBtn").onclick = async () => {
-  ta.focus();
-
-  // Fullscreen trick (for mobile Chrome)
-  try {
-    await document.documentElement.requestFullscreen();
-    setTimeout(() => {
-      document.exitFullscreen().catch(() => {});
-    }, 120);
-  } catch (e) {
-    // ignore fullscreen errors
-  }
-
-  // Delay to allow keyboard to appear
-  setTimeout(async () => {
-    // Show virtual keyboard if API available
-    if (navigator.virtualKeyboard?.show) {
-      try {
-        await navigator.virtualKeyboard.show();
-      } catch (e) {
-        // ignore errors
-      }
-    }
-
-    // Show the fake omnibox above keyboard
-    showFakeBar();
-  }, 150);
-};
-
-// Hide fake bar when textarea loses focus
-ta.addEventListener('blur', hideFakeBar);
-</script>
-
-</body>
 </html>
